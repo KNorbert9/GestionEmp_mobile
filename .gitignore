@@ -1,0 +1,12 @@
+# Laravel
+/vendor
+/node_modules
+/.env
+/storage/*.key
+
+# Flutter
+/build
+/.dart_tool
+/.packages
+/*.iml
+.idea
