@@ -58,6 +58,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: 'Email',
                 obscureText: false,
                 controller: _emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer votre email ou nom d\'utilisateur';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    Get.snackbar('Error', "l'address mail entré n'est pas valide, veuillez ressayer",
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white);
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
               InputWidget(

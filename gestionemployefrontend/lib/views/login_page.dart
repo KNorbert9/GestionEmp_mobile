@@ -48,12 +48,33 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: 'Email / Username',
                 obscureText: false,
                 controller: _emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer votre email ou nom d\'utilisateur';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    Get.snackbar('Error', "l'address mail entré n'est pas valide, veuillez ressayer",
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white);
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
               InputWidget(
                 hintText: 'Password',
                 obscureText: true,
                 controller: _passwordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    Get.snackbar('Error', 'Veuillez remplir tous les champs',
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white);
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
               Obx(() {
@@ -74,15 +95,16 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () async {
                           if (_emailController.text.isEmpty ||
                               _passwordController.text.isEmpty) {
-                            Get.snackbar('Error', 'Veuillez remplir tous les champs',
+                            Get.snackbar(
+                                'Error', 'Veuillez remplir tous les champs',
                                 snackPosition: SnackPosition.TOP,
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white);
                           } else {
                             await _authController.login(
-                            identity: _emailController.text.trim(),
-                            password: _passwordController.text.trim(),
-                          );
+                              identity: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            );
                           }
                         },
                         child: const Text(

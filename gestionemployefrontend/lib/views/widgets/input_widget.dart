@@ -7,13 +7,14 @@ class InputWidget extends StatelessWidget {
     required this.hintText,
     required this.controller,
     required this.obscureText,
+    this.validator,
   });
 
   final String hintText;
   final TextEditingController controller;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,10 +30,11 @@ class InputWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: obscureText,
         style: GoogleFonts.poppins(),
+        validator : validator,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey),
